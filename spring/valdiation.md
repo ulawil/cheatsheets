@@ -10,6 +10,9 @@ implementation("org.springframework.boot:spring-boot-starter-validation")
 ```
 
 ### Usage:
-#### With path variables/request params:  
+#### With path variables/request params:
+```
+@PathVariable("id") @Positive Long brandId
+```
 
 #### With request bodies:  
