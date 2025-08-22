@@ -5,8 +5,11 @@ implementation("org.springframework.boot:spring-boot-starter-validation")
 
 ### Annotations:
 ```
-
-
+@Positive
+@PositiveOrZero
+@Negative
+@NegativeOrZero
+@Pattern(regexp = )
 ```
 
 ### Usage:
