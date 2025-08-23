@@ -14,7 +14,6 @@
 ```
 - default mode for FetchType.EAGER
 - executes 1 JOIN query to fetch parent + associations
-- :warning: not guaranteed to work when fetching multiple entities - can fall back to SELECT mode to avoid cartesian product
 
 
 ### SUBSELECT
@@ -23,7 +22,7 @@
 ```
 - executes 2 queries - 1 SELECT for parents + 1 SUBSELECT for associations by parent ids
 - works with both FetchType.LAZY and FetchType.EAGER - overrides default mode
-- :warning: only works for collections - causes error when used with `@OneToOne` or `@ManyToOne`
+- only works for collections - causes error when used with `@OneToOne` or `@ManyToOne`
 
 ---
 
