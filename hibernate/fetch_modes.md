@@ -6,6 +6,7 @@
 ```
 - default mode for FetchType.LAZY 
 - executes 1 SELECT for parents + n SELECTs for each parent's associations (n + 1 problem)
+- can be optimized with `@BatchSize(size = ...)`
 
 ### JOIN
 ```java
