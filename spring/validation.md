@@ -42,32 +42,41 @@ public class PaintFullInfoDto {
 
     ...
 
-    @NotBlank
+    // simple field + custom message
+    @NotBlank(message = "Paint name must not be blank")
     private String name;
 
+    // simple collection
     @NotEmpty
-    @Valid
-    private List<PigmentShortInfoDto> pigments;
+    private List<@NotNull @Positive Long> pigmentIds;
 
+    // nested dto
     @NotNull
     @Valid
     private BrandShortInfoDto brand;
 
+    // collection of nested dtos
+    @NotEmpty
+    @Valid
+    private List<PigmentShortInfoDto> pigments;
+
     ...
 ```
 ```java
-public class PigmentShortInfoDto {
+public class BrandShortInfoDto {
 
     @NotNull
+    @Positive
     private Long id;
 
     ...
 }
 ```
 ```java
-public class BrandShortInfoDto {
+public class PigmentShortInfoDto {
 
     @NotNull
+    @Positive
     private Long id;
 
     ...
