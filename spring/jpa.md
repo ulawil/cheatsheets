@@ -1,12 +1,13 @@
 ### Relationship mapping
 <details>
-  <summary>One-to-many, many-to-one</summary>
+  <summary>One-to-many</summary>
 
 ```java
 @Entity
 @Table(name = "brand")
 public class BrandEntity {
 
+    // mappedBy - goes to the non-owning side (one without the foreign key)   
     @OneToMany(mappedBy = "brand", fetch = ?, cascade = ?, orphanRemoval = ?)
     private List<PaintEntity> paints;
 
@@ -19,7 +20,7 @@ public class BrandEntity {
 public class PaintEntity {
 
     @ManyToOne(fetch = ?, cascade = ?, optional = ?)
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "brand_id") // goes to the owning side of the relationship (one that contains the foreign key)  
     private BrandEntity brand;
 
     ...
@@ -87,27 +88,27 @@ public class BanlistInfo {
 </details>
 
 <details>
-  <summary>Annotations & params</summary>
+  <summary>Fetch types</summary>
+</br>
   
-* `@JoinColumn(name =)` - goes to the **owning** side of the relationship (one that contains the foreign key)
+`fetch` - specifies at what point the referenced entity/collection of entities is fetched:
+* `FetchType.EAGER` - when the referencing entity is fetched; default for `@OneToOne`, `@ManyToOne` realtionships
+* `FetchType.LAZY` - when the referenced entity is accessed; default for `@OneToMany`, `@ManyToMany` realtionships
 
-* `mappedBy` - goes to the **non-owning** side (one without the foreign key)
 
-* `fetch` - specifies at what point the referenced entity/collection of entities is fetched:
-  * `FetchType.EAGER` - when the referencing entity is fetched; default for `@OneToOne`, `@ManyToOne` realtionships
-  * `FetchType.LAZY` - when the referenced entity is accessed; default for `@OneToMany`, `@ManyToMany` realtionships
+</details>
 
-* `cascade` - specifies which operations will cascade to the referenced entity/collection of entities:
-  * `CascadeType.ALL`
-  * `CascadeType.PERSIST`
-  * `CascadeType.MERGE`
-  * `CascadeType.DETACH`
-  * `CascadeType.REMOVE`
-  * `CascadeType.REFRESH`
-
-* `orphanRemoval` - specifies whether entities removed from the relationship should be deleted; `false` by default
-
-* `optional` - specifies whether a non-null referenced entity is required; `true` by default
+<details>
+  <summary>Cascade types</summary>
+</br>
+  
+`cascade` - specifies which operations will cascade to the referenced entity/collection of entities:
+* `CascadeType.ALL`
+* `CascadeType.PERSIST`
+* `CascadeType.MERGE`
+* `CascadeType.DETACH`
+* `CascadeType.REMOVE`
+* `CascadeType.REFRESH`
 
 </details>
 
