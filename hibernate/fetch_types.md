@@ -1,15 +1,17 @@
-## Fetch types
+# Fetch types
 
-### EAGER
+## FetchType.EAGER
 ```java
 @OneToOne(fetch = FetchType.EAGER)
+private List<CardImage> cardImages;
 ```
 - parent entity's associations are fetched at the same time as the parent entity
 - default fetch type for `@OneToOne` and `@ManyToOne` relationships
 
-### LAZY
+## FetchType.LAZY
 ```java
 @OneToMany(fetch = FetchType.LAZY)
+private List<CardImage> cardImages;
 ```
 - parent entity's associations are fetched on-demand when they're accessed, e.g. when using their getter
 - default fetch type for `@OneToMany` and `@ManyToMany` relationships
