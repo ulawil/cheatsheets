@@ -17,8 +17,10 @@ private List<CardImage> cardImages;
 ```
 - default mode for FetchType.EAGER
 - executes 1 JOIN query to fetch parent + associations
-- ⚠️ may fail for multi-entity loads - Hibernate falls back to SELECT mode to avoid cartesian product for a large number of entities and associations
-- ⚠️ pagination technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)
+
+⚠️ may fail for multi-entity loads - Hibernate falls back to SELECT mode to avoid cartesian product for a large number of entities and associations  
+  
+⚠️ pagination technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)  
 
 
 ## SUBSELECT
@@ -27,10 +29,12 @@ private List<CardImage> cardImages;
 @Fetch(FetchMode.SUBSELECT)
 private List<CardImage> cardImages;
 ```
-- executes 2 queries - 1 SELECT for parents + 1 SELECT with subquery for associations by parent ids (parents required to be loaded into the context, otherwise will break)
+- executes 2 queries - 1 SELECT for parents + 1 SELECT with subquery for associations by parent ids
 - works with both FetchType.LAZY and FetchType.EAGER - overrides default mode
-- ⚠️ only works for collections - causes error when used with `@OneToOne` or `@ManyToOne`
-- ⚠️ breaks pagination - only a page of entities gets loaded into the context, but the 2nd query tries fetching all other entities' associations by ids which triggers selects
+
+⚠️ only works for collections - causes error when used with `@OneToOne` or `@ManyToOne`  
+  
+⚠️ breaks pagination - only a page of entities gets loaded into the context, but the 2nd query tries fetching all other entities' associations by ids which triggers selects  
 
 ---
 
