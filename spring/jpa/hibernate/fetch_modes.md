@@ -20,7 +20,7 @@ private List<CardImage> cardImages;
 
 ⚠️⚠️⚠️
 - may fail for multi-entity loads - Hibernate falls back to SELECT mode to avoid cartesian product for a large number of entities and associations
-- pagination technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)
+- pagination technically works, but is memory consuming (join prevents usage of LIMIT + OFFSET so Hibernate performs in-memory pagination)
 
 ## FetchMode.SUBSELECT
 ```java
