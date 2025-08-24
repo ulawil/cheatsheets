@@ -6,7 +6,7 @@
 List<Card> findAllWithImages();
 ```
 - Number of queries: 1
-- Pagination: either breaks (incorrect result) or causes memory problems (Hibernate can't do LIMIT + OFFSET because of the join, so instead does in-memory pagination)
+- Pagination: technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)
 
 ## Solution #2: Batch size
 ```java
