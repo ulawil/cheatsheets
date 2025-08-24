@@ -1,6 +1,6 @@
 # Fetch modes
 
-## SELECT
+## FetchMode.SELECT
 ```java
 @OneToMany
 @Fetch(FetchMode.SELECT)
@@ -9,7 +9,7 @@ private List<CardImage> cardImages;
 - default mode for FetchType.LAZY 
 - executes 1 SELECT for parents + n SELECTs for each parent's associations (n + 1 problem)
 
-## JOIN
+## FetchMode.JOIN
 ```java
 @OneToMany
 @Fetch(FetchMode.JOIN)
@@ -23,7 +23,7 @@ private List<CardImage> cardImages;
 ⚠️ pagination technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)  
 
 
-## SUBSELECT
+## FetchMode.SUBSELECT
 ```java
 @OneToMany
 @Fetch(FetchMode.SUBSELECT)
