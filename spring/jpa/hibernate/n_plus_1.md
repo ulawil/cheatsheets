@@ -6,7 +6,7 @@
 List<Card> findAllWithImages();
 ```
 - Number of queries: 1
-- Pagination: technically works, but is memory consuming (join prevents usage of LIMIT + OFFSEt so Hibernate performs in-memory pagination)
+- Pagination: technically works, but is memory consuming (join prevents usage of LIMIT + OFFSET so Hibernate performs in-memory pagination)
 
 ## Solution #2: Batch size
 ```java
@@ -32,4 +32,4 @@ spring:
 private List<CardImage> cardImages;
 ```
 - Number of queries: 2
-- Pagination: breaks (only a page of root entities loaded into context, `SUBSELECT` tries to fetch all others which causes n selects)
+- Pagination: breaks (only a page of root entities loaded into context, SUBSELECT tries to fetch all others which causes n selects)
