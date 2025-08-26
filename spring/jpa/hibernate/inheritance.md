@@ -41,10 +41,10 @@ public class TrapCard extends SpellCard {
 }
 ```
 Pros:
-- best performance for polymorphic queries (no joins & union all)
+- Best performance for polymorphic queries (no joins & union all)
 
 Cons:
-- many nullable collumns (waste of space)
+- Many nullable collumns (waste of space)
 
 ## JOINED strategy
 ```java
@@ -76,11 +76,12 @@ public class TrapCard extends SpellCard {
 }
 ```
 Pros:
-- less nullable columns
+- Less nullable columns
+- Normalized schema
 
 Cons:
-- worse query performance (requires joins)
-- worse performance for polymorphic queries (joins for each type + joins for all types)
+- Worse query performance (requires joins)
+- Worse performance for polymorphic queries (joins for each type + joins for all types)
 
 ## TABLE_PER_CLASS strategy
 ```java
@@ -109,8 +110,8 @@ public class TrapCard extends SpellCard {
 }
 ```
 Pros:
-- less nullable columns
+- Less nullable columns
 
 Cons:
-- worse performance for polymorphic queries (union all)
-- does not work with IDENTITY id generation strategy (each table generates its own id -> duplicate ids); use SEQUENCE or TABLE
+- Worse performance for polymorphic queries (union all)
+- Does not work with IDENTITY id generation strategy (each table generates its own id -> duplicate ids); use SEQUENCE or TABLE
