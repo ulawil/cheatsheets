@@ -1,39 +1,41 @@
-### Dependency:
-```
+# Spring beans validation
+
+## Dependency
+```gradle
 implementation("org.springframework.boot:spring-boot-starter-validation")
 ```
 
-### Annotations:
-#### General:
+## Annotations
+### General
 * `@NotNull`
  
-#### Numbers:
+### Numbers
 * `@Positive`, `@PositiveOrZero`
 * `@Negative`, `@NegativeOrZero`
 * `@Min`, `@DecimalMin`
 * `@Max`, `@DecimalMax`
 * `@Digits(integer = , fraction = )`
 
-#### Strings:
+### Strings
 * `@NotBlank`
 * `@Pattern(regexp = )`
 * `@Email`
 
-#### Arrays, collections, maps, strings:
+### Arrays, collections, maps, strings
 * `@NotEmpty`
 * `@Size`
 
-#### Dates:
+### Dates
 * `@Past`, `@PastOrPresent`
 * `@Future`, `@FutureOrPresent`
 
-### Usage:
-#### With path variables/request params:
+## Usage
+### With path variables/request params
 ```java
 @PathVariable("id") @Positive Long brandId
 ```
 
-#### With request bodies:  
+### With request bodies: 
 ```java
 @RequestBody @Valid PaintFullInfoDto paintFullInfoDto
 ```
@@ -83,7 +85,7 @@ public class PigmentShortInfoDto {
 }
 ```
 
-##### Error handling example:
+#### Error handling example:
 ```java
 @ExceptionHandler(MethodArgumentNotValidException.class)
 public ResponseEntity<ApiErrorDto> handleValidationException(MethodArgumentNotValidException e) {
