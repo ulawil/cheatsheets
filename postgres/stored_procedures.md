@@ -2,7 +2,10 @@
 
 ## Creating a stored procedure
 ```sql
-CREATE OR REPLACE PROCEDURE add_card_to_faves(IN arg_user_id BIGINT, IN arg_card_id BIGINT)
+CREATE OR REPLACE PROCEDURE add_card_to_faves(
+    IN arg_user_id BIGINT,
+    IN arg_card_id BIGINT
+)
 LANGUAGE plpgsql
 AS $$
 BEGIN
