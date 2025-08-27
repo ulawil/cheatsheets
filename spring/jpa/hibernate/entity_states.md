@@ -15,7 +15,7 @@
 - entity has a corresponding row in db
 - e.g. after calling `em.detach()`
 
-# Removed
+## Removed
 - entity is associated with persistence context but is marked for removal
 - entity has a corresponding table row which will be deleted after the session is flushed
 - e.g. after calling `em.remove()`
