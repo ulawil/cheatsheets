@@ -9,7 +9,7 @@ spring:
         jdbc:
           batch_size: ?
 ```
-⚠️ Bulk insert doesn't work with IDENTITY id generation strategy (because Hibernate can't generate ids in batches); use SEQUENCE or TABLE strategy
+⚠️ Bulk insert doesn't work with `IDENTITY` id generation strategy (because this way Hibernate can't generate ids in batches); use `SEQUENCE` or `TABLE` strategy
 
 ### Ordering inserts/updates
 A batch can only contain 1 type of entity; to batch insert/update multiple entity types properly they need to be ordered; configured by setting:
