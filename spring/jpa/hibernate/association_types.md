@@ -10,7 +10,6 @@ public class BrandEntity {
     private List<PaintEntity> paints;
 
     ...
-}
 ```
 ```java
 @Entity
@@ -72,7 +71,6 @@ public class BanlistInfo {
     private Card card;
 
     ...
-}
 ```
 
 ---
