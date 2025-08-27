@@ -5,11 +5,11 @@ spring:
   jpa:
     properties:
       hibernate:
+        jdbc:
+          batch_size=?
         order_inserts=true
         order_updates=true
         default_batch_fetch_size=?
-        jdbc:
-          batch_size=?
 ```
 
 - `jdbc.batch_size` - sets max batch size for bulk inserts/updates/deletes
