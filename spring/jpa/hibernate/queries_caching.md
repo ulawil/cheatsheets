@@ -27,8 +27,8 @@ public class PlayerEntity {
 ```
 
 ## Restrictions
-- use for querying entities that rarely change
-- don't use for queries with many parameters (each combinations of params = 1 more cache entry)
+- Don't cache queries for frequently changing entities
+- Don't cache queries with many parameters (each combinations of params = 1 more cache entry)
 
 ## Best practices
-TODO
+- Use with 2nd level cache
