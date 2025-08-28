@@ -7,7 +7,7 @@ spring:
     properties:
       hibernate:
         cache:
-          use_second_level_cache: true # 2nd level cache required
+          use_second_level_cache: true
           use_query_cache: true
 ```
 
