@@ -1,5 +1,22 @@
 # Threads basics
 
+## Thread states
+`NEW` - thread has not started yet  
+
+`RUNNABLE` - thread is executing in JVM (includes waiting for OS resources)
+
+`BLOCKED` - thread is waiting to acquire a monitor lock so it can enter a synchronized block
+
+`WAITING` - thread is waiting for another thread to perform some action:
+
+- calling `notify()` or `notifyAll` if it called `wait()` with no timeout
+- terminate if it called `join` with no timeout
+
+`TIMED_WAITING` - like `WAITING` but if the methods were called with timeout
+- also includes `Thread.sleep()`
+
+`TERMINATED` - the thread has finished execution
+
 ## Thread.start()
 Causes the thread to begin execution - under the hood JVM calls run() method in a new thread  
 :warning: throws `IllegalThreadStateException` when called more than once on the same thread
@@ -115,3 +132,9 @@ public static void synchronizedStaticCodeBlockExample() {
 ```
 
 ## volatile keyword
+In order to ensure any updates to variable are visible to all threads at any given time, makes the JVM bypass some optimization mechanisms when reading/writing to the variable:
+- avoid reordering instructions related to volatile variable
+- avoid reading/writing to thread cache, instead reading/writing to main memory directly  
+
+:warning: Only use by itself for simple flag/state checks - for atomic operations use synchronized or atomic types  
+- No need to combine with `synchronized` (it already provides visibility) unless implementing double-checked locking for lazy singletons
