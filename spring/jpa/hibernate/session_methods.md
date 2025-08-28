@@ -1,14 +1,12 @@
 # Session methods
 
-## persist
+## persist / save
 ```java
 session.persist(anime);
 // persists a transient entity
 // doesn't guarantee immediate id assignment
 // JPA specification-compliant
 ```
-
-## save
 ```java
 Long savedId = (Long) session.save(anime);
 // also persists a transient entity
@@ -16,14 +14,12 @@ Long savedId = (Long) session.save(anime);
 // deprecated in favor of persist()
 ```
 
-## merge
+## merge / update
 ```java
 AnimeEntity animeUpdated = session.merge(anime);
 // copies the state of given detached instance into a persistent instance with the same id
 // JPA specification-compliant
 ```
-
-## update
 ```java
 session.update(anime);
 // updates the state of persistent instance with the id of given detached instance
@@ -44,14 +40,12 @@ session.flush();
 // JPA specification-compliant
 ```
 
-## detach
+## detach / evict
 ```java
 session.detach(anime);
 // removes instance from persistence context
 // JPA specification-compliant
 ```
-
-## evict
 ```java
 session.detach(anime);
 // removes instance from persistence context
@@ -67,30 +61,52 @@ session.refresh(anime);
 // JPA specification-compliant
 ```
 
-## remove
+## remove / delete
 ```java
 session.remove(anime);
 // marks given persistent instance for removal
 // JPA specification-compliant
 ```
-
-## delete
 ```java
 session.delete(anime);
 // removes persistent instance from the db
 // deprecated in favor of `remove()`
 ```
 
-## find
+## find / get
 ```java
 AnimeEntity anime = session.find(AnimeEntity.class, 1L);
-// finds instance by id
+// loads instance by id
 // JPA specification-compliant
+```
+```java
+AnimeEntity anime = session.find(AnimeEntity.class, 1L);
+// loads instance by id
+// similar to find()
+```
+
+## getReference / load
+```java
+AnimeEntity anime = session.getReference(AnimeEntity.class, 1L);
+// loads instance by id who's state may be lazily fetched
+// JPA specification-compliant
+```
+```java
+AnimeEntity anime = session.getReference(AnimeEntity.class, 1L);
+// loads instance by id who's state may be lazily fetched
+// deprecated in favor of getReference()
 ```
 
 ## refresh
 ```java
 session.refresh(anime);
 // synchronizes state of given instance with the state of its correesponding table row in db
+// JPA specification-compliant
+```
+
+## close
+```java
+session.close();
+// ends session by releasin JDBC connection and cleaning up
 // JPA specification-compliant
 ```
