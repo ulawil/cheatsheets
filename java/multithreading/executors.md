@@ -22,13 +22,13 @@ Executor newThreadExecutor = new Executor() {
         new Thread(command).start();
     }
 };
-newThreadExecutor.execute(() -> System.out.println(Thread.currentThread()));// Thread[Thread-0,5,main]
+newThreadExecutor.execute(() -> System.out.println(Thread.currentThread())); // Thread[Thread-0,5,main]
 ```
 
 ## ExecutorService
 An extension of Executor interface that provides methods to manage task termination as well as methods that return Future for tracking progress of asynchronous tasks; used with `Executors` class that provides factory methods for creating executors
 
-### Single thread executor + Runnable example
+### SingleThreadExecutor + Runnable example
 ```java
 ExecutorService executorService = Executors.newSingleThreadExecutor();
 Future<?> future = executorService.submit(() -> System.out.println(Thread.currentThread()));
@@ -39,7 +39,7 @@ executorService.shutdown();
 
 ```
 
-### Single thread executor + Callable example
+### SingleThreadExecutor + Callable example
 ```java
 ExecutorService executorService = Executors.newSingleThreadExecutor();
 Future<?> future = executorService.submit(Thread::currentThread);
@@ -51,7 +51,7 @@ executorService.shutdown();
 
 ```
 
-### Single thread scheduled executor example
+### SingleThreadScheduledExecutor example
 ```java
 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 executorService.scheduleAtFixedRate(() -> System.out.println("Fixed rate task"), 0, 3, TimeUnit.SECONDS);
@@ -60,7 +60,7 @@ executorService.scheduleAtFixedRate(() -> System.out.println("Fixed rate task"),
 
 ```
 
-### Fixed thread pool example
+### FixedThreadPool example
 ```java
 ExecutorService executorService = Executors.newFixedThreadPool(3);
 for (int i = 1; i <= 3; i++) {
