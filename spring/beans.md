@@ -81,3 +81,27 @@ private CardService cardService;
 
 ### Destruction phases
 1. `DisposableBean.destroy()`, `@Bean(destroyMethod = ...)` method, `@PreDestroy` annotated methods called if implemented
+
+## Multiple beans of the same type
+  
+TODO fix cause beans here should implement common interface  
+  
+Solution #1 - `@Primary`:
+```java
+@Bean
+@Primary
+public CardService cardService() {
+    return new CardService(null, null, null);
+}
+```
+Solution #2 - `@qualifier`:
+```java
+@Component("particularCardService")
+public class CardService {
+    ...
+```
+```java
+@Autowired
+@Qualifier("particularBeanService")
+private final CardService cardService;
+```
