@@ -2,14 +2,14 @@
 
 ## docker-compose.yml
 ```yaml
-version: "3.8"
+version: '3.8'
 
 services:
   db:
     image: postgres:17.0
     container_name: postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - mydata:/var/lib/postgresql/data
     environment:
