@@ -1,4 +1,4 @@
-# Spring + PostgreSQL db setup
+# Spring + PostgreSQL DB setup
 
 ## docker-compose.yml
 ```yaml
