@@ -4,8 +4,8 @@
 
 ```sql
 CREATE TABLE [IF NOT EXISTS] table_name (
-    col_name col_type [AUTO_INCREMENT] PRIMARY KEY, -- MySQL
-    col_name col_type [GENERATED ALWAYS/BY DEFAULT AS IDENTITY] PRIMARY KEY , -- PostgreSQL
+    col_name col_type [AUTO_INCREMENT]                          PRIMARY KEY, -- MySQL
+    col_name col_type [GENERATED ALWAYS|BY DEFAULT AS IDENTITY] PRIMARY KEY, -- PostgreSQL
     col_name col_type REFERENCES another_table(col_name) [ON DELETE action ON UPDATE action],
     col_name col_type NOT NULL,
     col_name col_type UNIQUE,
@@ -20,12 +20,29 @@ CREATE TABLE [IF NOT EXISTS] table_name (
 );
 ```
 
-## Altering a table
+## Modifying a table
 ```sql
-ALTER TABLE table_name ADD COLUMN col_name TYPE <contraints/options.
+ALTER TABLE table_name RENAME TO new_table_name;
+                       ADD    COLUMN col_name col_type [constraints];
+                       DROP   COLUMN col_name;
+                       RENAME COLUMN col_name TO new_col_name;
+                       ADD  CONSTRAINT constraint_name constraint_def;
+                       DROP CONSTRAINT constraint_name; -- doesn't work for pkeys and fkeys in MySQL
+               (MySQL) DROP PRIMARY KEY;
+                            FOREIGN KEY fkey_name;
+          (PostgreSQL) ALTER  COLUMN col_name DROP|SET NOT NULL;
+                                              DROP|SET DEFAULT x;
+                                              TYPE new_type;
+               (MySQL) MODIFY COLUMN col_name new_type [NOT NULL|DEFAULT x];
+                       CHANGE COLUMN col_name new_name new_type [constraints];
 ```
 
-## Dropping a table
+## Deleting a table
+```sql
+DROP TABLE [IF EXISTS] table_name;
+```
 
-### Truncating a table
-`TRUNCATE` - will delete all table rows
+## Clearing a table
+```sql
+TRUNCATE table_name;
+```
