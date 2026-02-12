@@ -2,6 +2,22 @@
 
 ## Creating a Reactive Stream.
 
+### Creating a Flux
+- `Flux.just`
+- `Flux.fromArray`
+- `Flux.fromIterable`
+- `Flux.fromStream`
+- `Flux.from(publisher) // can be Mono or FLux`
+
+### Creating a Mono
+- `Mono.just`
+- `Mono.justOrEmpty`
+- `Mono.justOrEmpty(optional)`
+- `Mono.from(publisher) // can be Mono or Flux but if Flux will be created from 1st element?`
+- `Mono.fromCallable`
+- `Mono.fromRunnable`
+- `Mono.fromFuture(completableFuture)`
+
 ## Basic intermediate and terminal operations
 Intermediate operations - transform the stream (modify, filter, combine) and do not trigger execution of the stream
 - `map` - like in streams
@@ -59,6 +75,9 @@ Reactive Streaming:
 - uses events
 
 ## Understanding operations: zip, defer, combineLatest, etc.
+
+- `combineLatest` - creates a flux whose elements are the latest published elements from each source combined
+- `defer(supplier)` - lazily provides a publisher every time a the subscription happens (when we want to do something that provides the publisher, e.g. call external service every time the subscription is made?)
 
 ## Project Reactor: Understanding the difference between Flux and Mono and converting them to each other
 
