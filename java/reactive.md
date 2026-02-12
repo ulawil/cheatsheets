@@ -32,31 +32,21 @@ Callbacks -
 
 ### Exception handling by recovering from exception (catch exception and take action)
 - `onErrorReturn` - catches the exception and provides a default fallback value
-```java
-.onErrorReturn("fallback value")
-```
 - `onErrorResume` - catches the exception and subscribes to a fallback publisher
-```java
-.onErrorResume(e -> {
-    log.error("exception: ", e);
-    return Flux.just("recovery flux e1", "recovery flux e2");
-})
-```
 - `onErrorContinue` - catches the exception, drops the element that caused it and continues the stream
-```java
-.onErrorContinue((e, obj) -> log.error("exception for obj {}: {})", obj, e.getMessage()))
-```
 
 ### Exception handling by taking action and rethrowing
 - `onErrorMap` - catches the exception, maps it into another type and throws
-```java
-.onErrorMap(e -> new IllegalStateException(e.getMessage()))
-```
+- `doOnError` - catches the exception, performs an action that does not modify the stream and re-throws it
 
-- `doOnError` - catches the exception, performs an action that does not modify the stream and throws
-```java
-.doOnError(e -> log.error("exception: ", e))
-```
+### Retrying the stream
+- `retry` - in case of error, re-subscribes to the stream indefinitely
+- `retry(n)` - in case of error, re-subscribes to the stream fixed number of times
+- `retryWhen(retrySpec)` - conditionally retries in case of specific errors
+
+### Repeating the stream (?)
+- `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
+- `repeat(n)` - repeatedly subscribes to the source fixed number of times
 
 ## Best Practices
 
