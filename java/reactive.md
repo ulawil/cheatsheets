@@ -2,14 +2,14 @@
 
 ## Creating a Reactive Stream.
 
-### Creating a Flux
+Creating a Flux:
 - `Flux.just`
 - `Flux.fromArray`
 - `Flux.fromIterable`
 - `Flux.fromStream`
 - `Flux.from(publisher) // can be Mono or FLux`
 
-### Creating a Mono
+Creating a Mono:
 - `Mono.just`
 - `Mono.justOrEmpty`
 - `Mono.justOrEmpty(optional)`
@@ -46,21 +46,21 @@ Callbacks -
 
 ## Exception handling
 
-### Exception handling by recovering from exception (catch exception and take action)
+Exception handling by recovering from exception (catch exception and take action):
 - `onErrorReturn` - catches the exception and provides a default fallback value
 - `onErrorResume` - catches the exception and subscribes to a fallback publisher
 - `onErrorContinue` - catches the exception, drops the element that caused it and continues the stream
 
-### Exception handling by taking action and rethrowing
+Exception handling by taking action and rethrowing:
 - `onErrorMap` - catches the exception, maps it into another type and throws
 - `doOnError` - catches the exception, performs an action that does not modify the stream and re-throws it
 
-### Retrying the stream
+Retrying the stream:
 - `retry` - in case of error, re-subscribes to the stream indefinitely
 - `retry(n)` - in case of error, re-subscribes to the stream fixed number of times
 - `retryWhen(retrySpec)` - conditionally retries in case of specific errors
 
-### Repeating the stream (?)
+### Repeating the stream:
 - `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
 - `repeat(n)` - repeatedly subscribes to the source fixed number of times
 
