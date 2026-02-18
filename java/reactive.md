@@ -81,6 +81,21 @@ Reactive Streaming:
 
 ## Project Reactor: Understanding the difference between Flux and Mono and converting them to each other
 
+**Mono** - an implementation of Publisher that emits 0-1 elements
+
+**FLux** - an implementation of Publusher that emits 0-n elements
+
+Converting Mono to Flux:
+- `Flux.from(mono)`
+- `mono.flux()`
+
+Converting FLux to Mono:
+- `Mono.from(flux)` - creates Mono with 1st element of fLux
+- `flux.next()` - creates Mono with 1st element of fLux
+- `flux.last()` - creates Mono with last element of fLux
+- `flux.collectList()`
+- `flux.reduce()`
+
 ## RxJava: Understanding the difference between Observable, Flowable, Maybe, Single, and converting them to each other
 
 
