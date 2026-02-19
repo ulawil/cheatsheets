@@ -12,14 +12,13 @@ Creating a Flux:
 Creating a Mono:
 - `Mono.just`
 - `Mono.justOrEmpty`
-- `Mono.justOrEmpty(optional)`
 - `Mono.from(publisher) // can be Mono or Flux but if Flux will be created from 1st element?`
 - `Mono.fromCallable`
 - `Mono.fromRunnable`
 - `Mono.fromFuture(completableFuture)`
 
 ## Basic intermediate and terminal operations
-Intermediate operations - transform the stream (modify, filter, combine) and do not trigger execution of the stream
+**Intermediate operations** - transform the stream without triggering its execution:
 - `map` - like in streams
 - `filter` - like in streams
 - `transform` - allows for combining multiple operations on Mono/Flux into 1 method (e.g. filter + map)
@@ -39,10 +38,11 @@ Intermediate operations - transform the stream (modify, filter, combine) and do 
 - `defaultIfEmpty` - provides a default value if a mono/flux is completed without any data
 - `switchIfEmpty` - switches to an alternate publisher if a mono/flux is completed without any data (flux -> mono v, mono -> flux x)
 
-Terminal operations - operations that trigger execution of the stream
-- `subscribe`
-
-Callbacks - 
+**Terminal operations** - trigger execution of the stream
+- `subscribe` - the most important terminal operation; subscribes to the streamm triggering the data flow
+- `block // for Mono` - blocks the thread waiting for the stream to complete and returns value (not recommended in reactive apps); terminal because it subscribes internally!!
+- `blockFirst // for FLux`
+- `blockLast // for Flux`
 
 ## Exception handling
 
@@ -68,11 +68,9 @@ Retrying the stream:
 
 ## Understanding the difference between Java Stream API and Reactive Streaming
 
-Java Stream API:
-- uses threads
+**Java Stream API** - used for processing collections of data, replaces large for loops with nested ifs with functional-style processing
 
-Reactive Streaming:
-- uses events
+**Reactive Streaming** - used for creating non-blocking, asynchronous APIs instead of traditional thread-per-request APIs
 
 ## Understanding operations: zip, defer, combineLatest, etc.
 
