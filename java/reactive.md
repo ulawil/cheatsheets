@@ -1,6 +1,6 @@
 # Reactive Streams (Project Reactor, RxJava)
 
-## Creating a Reactive Stream.
+## Creating a Reactive Stream
 
 Creating a Flux:
 - `Flux.just`
@@ -18,29 +18,25 @@ Creating a Mono:
 - `Mono.fromFuture(completableFuture)`
 
 ## Basic intermediate and terminal operations
-**Intermediate operations** - transform the stream without triggering its execution:
-- `map` - like in streams
+**Intermediate operations** - operations that do not trigger stream execution (basically anything that isn't `subscribe()` or doesn't call it internally)
+- `map` >! like in streams
 - `filter` - like in streams
 - `transform` - allows for combining multiple operations on Mono/Flux into 1 method (e.g. filter + map)
----
-- `flatMap` - use instead of map if the result of element transformation is another flux/mono; eagerly subscribes to all inner fluxes so element order may not be preserved
+- `flatMap` - use instead of map if the result of element transformation is another flux/mono; eagerly subscribes to all inner fluxes so elements may overlap
 - `flatMapMany` - use instead of flatMap if transforming element inside Mono into a Flux
 - `concatMap` - similar to flatMap but preserves element order by waiting for one inner flux to complete before subscribing to another one
----
-- `concat` - static method for combining multiple monos/fluxes into one flux with order preserved by waiting for one publisher to complete emitting before subscribing to the next one 
-- `concatWith` - non-static equivalent of concat
-- `merge` - similar to concat but does not preserve order due to all publishers being subscribed to eagerily
-- `MergeWith` non-static equivalent of merge
-- `mergeSequential` - combines concat and merge; all publishers are subscribed to eagerily but order is preserved (more memory usage tho due to caching?)
-- `zip` - static method for combining multiple monos/fluxes into a flux of tuples by waiting for all sources to emit 1 element, putting them into a tuple, then subscribing to another
-- `zipWith` - non-static equivalent of zip
----
+- `concat`, `concatWith` - combines multiple monos/fluxes into one flux; does not cause element overlap by waiting for one publisher to complete before subscribing to the next one 
+- `merge`, `MergeWith` - combines multiple monos/fluxes into one flux; may cause element overlap by subscribing to all publishers eagerly
+- `mergeSequential` - combines multiple monos/fluxes into one flux; subscribes to all publishers eagerly but does not cause element overlap by caching (?)
+- `zip`, `zipWith` - combines multiple monos/fluxes into a flux of tuples; waits for all sources to emit 1 element, puts elements into a tuple, then waits for another element
 - `defaultIfEmpty` - provides a default value if a mono/flux is completed without any data
-- `switchIfEmpty` - switches to an alternate publisher if a mono/flux is completed without any data (flux -> mono v, mono -> flux x)
+- `switchIfEmpty` - switches to an alternate publisher if a mono/flux is completed without any data
+- `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
+- `repeat(n)` - repeatedly subscribes to the source fixed number of times
 
-**Terminal operations** - trigger execution of the stream
-- `subscribe` - the most important terminal operation; subscribes to the streamm triggering the data flow
-- `block // for Mono` - blocks the thread waiting for the stream to complete and returns value (not recommended in reactive apps); terminal because it subscribes internally!!
+**Terminal operations** - operations trigger execution of the stream (`subscribe()` and anything that calls it internally)
+- `subscribe` - subscribes to the streamm triggering the data flow
+- `block // for Mono` - blocks the thread waiting for the stream to complete and returns value; terminal because it subscribes internally
 - `blockFirst // for FLux`
 - `blockLast // for Flux`
 
@@ -60,10 +56,6 @@ Retrying the stream:
 - `retry(n)` - in case of error, re-subscribes to the stream fixed number of times
 - `retryWhen(retrySpec)` - conditionally retries in case of specific errors
 
-### Repeating the stream:
-- `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
-- `repeat(n)` - repeatedly subscribes to the source fixed number of times
-
 ## Best Practices
 
 ## Understanding the difference between Java Stream API and Reactive Streaming
@@ -81,7 +73,7 @@ Retrying the stream:
 
 **Mono** - an implementation of Publisher that emits 0-1 elements
 
-**FLux** - an implementation of Publusher that emits 0-n elements
+**FLux** - an implementation of Publisher that emits 0-n elements
 
 Converting Mono to Flux:
 - `Flux.from(mono)`
