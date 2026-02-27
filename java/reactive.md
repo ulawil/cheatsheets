@@ -18,27 +18,31 @@ Creating a Mono:
 - `Mono.fromFuture(completableFuture)`
 
 ## Basic intermediate and terminal operations
-**Intermediate operations** - operations that do not trigger stream execution (basically anything that isn't `subscribe()` or doesn't call it internally)
-- `map` - like in streams
-- `filter` - like in streams
-- `transform` - allows for combining multiple operations on Mono/Flux into 1 method (e.g. filter + map)
-- `flatMap` - use instead of map if the result of element transformation is another flux/mono; eagerly subscribes to all inner fluxes so elements may overlap
-- `flatMapMany` - use instead of flatMap if transforming element inside Mono into a Flux
-- `concatMap` - similar to flatMap but preserves element order by waiting for one inner flux to complete before subscribing to another one
-- `concat`, `concatWith` - combines multiple monos/fluxes into one flux; does not cause element overlap by waiting for one publisher to complete before subscribing to the next one 
-- `merge`, `MergeWith` - combines multiple monos/fluxes into one flux; may cause element overlap by subscribing to all publishers eagerly
-- `mergeSequential` - combines multiple monos/fluxes into one flux; subscribes to all publishers eagerly but does not cause element overlap by caching (?)
-- `zip`, `zipWith` - combines multiple monos/fluxes into a flux of tuples; waits for all sources to emit 1 element, puts elements into a tuple, then waits for another element
-- `defaultIfEmpty` - provides a default value if a mono/flux is completed without any data
-- `switchIfEmpty` - switches to an alternate publisher if a mono/flux is completed without any data
-- `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
-- `repeat(n)` - repeatedly subscribes to the source fixed number of times
+**Intermediate operations** - operations that do not trigger stream execution (basically anything that isn't `subscribe` or doesn't call it internally)
+- mapping
+  - `map` - for 1:1 transformations
+  - `flatMap` - for 1:n transformations; eagerly subscribes to all inner publishers so elements may overlap
+  - `flatMapMany` - use instead of flatMap if transforming element inside Mono into a Flux
+  - `concatMap` - preserves element order by waiting for one inner flux to complete before subscribing to another one
+- filtering
+  - `filter`
+- combining
+  - `concat`, `concatWith` - does not cause element overlap by waiting for one publisher to complete before subscribing to the next one 
+  - `merge`, `MergeWith` - may cause element overlap by subscribing to all publishers eagerly
+  - `mergeSequential` - subscribes to all publishers eagerly but does not cause element overlap by caching (?)
+  - `zip`, `zipWith` - waits for all sources to emit 1 element, puts elements into a tuple, then waits for another element
+- others
+  - `transform` - allows for combining multiple operations on Mono/Flux into 1 method (e.g. filter + map)
+  - `defaultIfEmpty` - provides a default value if a mono/flux is completed without any data
+  - `switchIfEmpty` - switches to an alternate publisher if a mono/flux is completed without any data
+  - `repeat` - repeatedly and indefinitely subscribes to the source when previous subscription completed
+  - `repeat(n)` - repeatedly subscribes to the source fixed number of times
 
-**Terminal operations** - operations trigger execution of the stream (`subscribe()` and anything that calls it internally)
+**Terminal operations** - operations trigger execution of the stream (`subscribe` and anything that calls it internally)
 - `subscribe` - subscribes to the streamm triggering the data flow
-- `block // for Mono` - blocks the thread waiting for the stream to complete and returns value; terminal because it subscribes internally
-- `blockFirst // for FLux`
-- `blockLast // for Flux`
+- `mono.block` - blocks the thread waiting for the stream to complete and returns value; terminal because it subscribes internally
+- `flux.blockFirst`
+- `flux.blockLast`
 
 ## Exception handling
 
@@ -73,7 +77,7 @@ Retrying the stream:
 
 **Mono** - an implementation of Publisher that emits 0-1 elements
 
-**FLux** - an implementation of Publisher that emits 0-n elements
+**Flux** - an implementation of Publisher that emits 0-n elements
 
 Converting Mono to Flux:
 - `Flux.from(mono)`
