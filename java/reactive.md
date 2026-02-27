@@ -19,7 +19,7 @@ Creating a Mono:
 
 ## Basic intermediate and terminal operations
 **Intermediate operations** - operations that do not trigger stream execution (basically anything that isn't `subscribe()` or doesn't call it internally)
-- `map` >! like in streams
+- `map` - like in streams
 - `filter` - like in streams
 - `transform` - allows for combining multiple operations on Mono/Flux into 1 method (e.g. filter + map)
 - `flatMap` - use instead of map if the result of element transformation is another flux/mono; eagerly subscribes to all inner fluxes so elements may overlap
