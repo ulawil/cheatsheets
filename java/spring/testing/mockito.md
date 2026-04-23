@@ -1,66 +1,65 @@
 # Mockito
 
-## Dependency
+## Mockito annotations
+
+### `@Mock`
+Can be used instead of `Mockito.mock` method to create a mock object:
 ```java
-testImplementation("org.springframework.boot:spring-boot-starter-test")
+// static method
+UserRepository userRepository = mock(UserRepository.class);
+
+// annotation
+@Mock
+private UserRepository userRepository;
 ```
 
-## Mockito annotations
-- `@Mock` - used to create a mock object instead of Mockito.mock method
-- `@InjectMocks` - injects created mocks into the class that is being tested instead of injecting them manually through constructor
-- `@ExtendWith(MockitoExtension.class)` - enables Mockito in Junit5 (`@Mock` objects are created, `InjectMocks` is processed)
-- `@MockBean` - replaces a spring bean with a mock in `@SpringBootTest` tests
-- `@Spy` - used to create a partial mock (real object which can have specific behavior overriden) instead of Mockito.spy
-- `@Captor` - captures method arguments
+### `@Spy`
+Can be used instead of `Mockito.spy` method to create a partial mock (real object which can have specific behavior overriden):
+```java
+// static method
+List<UserDto> usersSpy = spy(users);
 
-Mocking with Spring example:
+// annotation
+@Spy
+private List<UserDto> users;
+```
+!! always use `doReturn` instead of `when` with spies because the latter actually invokes the method before mocking
+
+### `@InjectMocks`
+Creates instance of class under test and injects mocks and spies into it
 ```java
 @ExtendWith(MockitoExtension.class)
-class UserServiceUnitTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
 
     @InjectMocks
     private UserService userService;
-
-    @Test
-    void userService_issueGreeting_success() {
-        // given
-        Long userId = 1L;
-        User user = User.builder().id(userId).name("Uleczka").build();
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-
-        // when
-        String result = userService.issueGreeting(userId);
-
-        // then
-        assertThat(result).isEqualTo("Hello, Uleczka");
-        verify(userRepository).findById(userId);
-    }
 ```
 
-Mocking without Spring example:
+### `@Captor`
+Can be used instead of `ArgumentCaptor.forClass` method to create an argument captor:
 ```java
-    @Test
-    void userService_issueGreeting_success() {
-        // given
-        UserRepository userRepository = mock(UserRepository.class);
-        UserService userService = new UserService(userRepository);
-        Long userId = 1L;
-        User user = User.builder().id(userId).name("Uleczka").build();
-        when(userRepository.findById(userId))
-                .thenReturn(Optional.of(user));
-        // when
-        String result = userService.issueGreeting(userId);
+// static method
+ArgumentCaptor<UserEntity> userCaptor = ArgumentCaptor.forClass(UserEntity.class);
 
-        // then
-        assertThat(result).isEqualTo("Hello, Uleczka");
+// annotation
+@Captor
+private ArgumentCaptor<UserEntity> userCaptor;
+```
 
-        verify(userRepository).findById(idCaptor.capture());
-        Long id = idCaptor.getValue();
-        assertThat(id).isEqualTo(1L);
-    }
+### `@MockitoBean`
+Replaces a spring bean with a mock in `@SpringBootTest` tests
+```java
+@SpringBootTest
+class UserServiceTest {
+
+    @MockitoBean
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 ```
 
 ## Argument matchers
@@ -69,15 +68,16 @@ Mocking without Spring example:
 - use `argThat()` for advanced matching
 
 ## Argument captors
-- use with `verify()` to capture what was *actually* passed into a mock and inspect it
-```
+Used with `verify()` to capture what was *actually* passed into a mock and inspect it:
+```java
 @Captor
-ArgumentCaptor<Long> idCaptor;
+private ArgumentCaptor<UserEntity> userCaptor;
 ...
-verify(userRepository).findById(idCaptor.capture());
-Long id = idCaptor.getValue();
-assertThat(id).isEqualTo(1L);
-
+when(userRepository.findById(anyLong())).thenReturn(Optional.of(UserEntity.builder().name("Uleczka").build()));
+...
+verify(userMapper).toDto(userCaptor.capture());
+UserEntity captured = userCaptor.getValue();
+assertThat(captured.getName()).isEqualTo("Uleczka");
 ```
 
 ## Verification mode
